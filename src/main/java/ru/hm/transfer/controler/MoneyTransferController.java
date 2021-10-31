@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @Validated
 @RequestMapping("/")
 public class MoneyTransferController {
@@ -21,6 +22,7 @@ public class MoneyTransferController {
         this.service = service;
     }
 
+
     @GetMapping("/")
     public String hello(){
         return "Hello from Money Transfer App";
@@ -28,15 +30,16 @@ public class MoneyTransferController {
 
     @PostMapping("/transfer")
     public Response transfer (@RequestBody @Valid Transfer transfer) {
-        return service.transfer(transfer,service.saveOperation(new TransferOperations(transfer)));
+        System.out.println(transfer);
+        return service.transfer(transfer);
+
     }
 
     @PostMapping("/confirmOperation")
     public Response confirmOperation(@RequestBody @Valid ConfirmationRequest confirmationRequest){
-
+        System.out.println(confirmationRequest);
         return service.confirmOperation(confirmationRequest.getOperationId(),confirmationRequest.getCode());
     }
-
 
     @PostMapping("/put")
     public Account put(@RequestBody @NotBlank String number, @RequestBody @Min(0) Integer amount) {
@@ -55,7 +58,6 @@ public class MoneyTransferController {
 
     @PostMapping("/newaccount")
     public Account newAccount(@RequestBody @Valid Account account) {
-        System.out.println(account);
         return service.createAccount(account);
     }
 

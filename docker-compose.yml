@@ -1,26 +1,19 @@
 version: "3.7"
 services:
-  database:
-    image: mysql:5.7
+  front_app:
+    build: /card-transfer/.
     restart: on-failure
     ports:
-      - "3306:3306"
-    volumes:
-      - "./db/mysql:/var/lib/mysql"
-    environment:
-      - MYSQL_ROOT_PASSWORD=1
+      - "3000:3000"
 
-
-  task_app:
+  transfer_app:
     build: .
     links:
-      - "database"
+      - "front_app"
     restart: on-failure
     ports:
-      - "8080:8080"
-    environment:
-      - MYSQL_HOST=database
-      - spring.datasource.url=jdbc:mysql://database:3306/socks?createDatabaseIfNotExist=true
-      - spring.datasource.username=root
-      - spring.datasource.password=1
+      - "5500:5500"
+    volumes:
+      - "./mydb:/mydb"
+
 

@@ -15,17 +15,21 @@ public class Transfer {
     @Length(min = 16,max = 16)
     @Pattern(regexp = "^[0-9]{1,16}$")
     private String cardFromNumber;
+
     @NotNull
-    @Length(min = 4,max = 4)
-    @Pattern(regexp = "^[0-1][0-9]{1,3}$")
+    @Length(min = 5,max = 5)
+    @Pattern(regexp = "[0-1][0-9]/[0-9][0-9]")
     private String cardFromValidTill;
+
     @NotNull
     @Length(min = 3,max = 3)
     @Pattern(regexp = "^[0-9]{1,3}$")
     private String cardFromCVV;
+
     @Length(min = 16,max = 16)
     @Pattern(regexp = "^[0-9]{1,16}$")
     private String cardToNumber;
+
     @NotNull
     @Embedded
     @AttributeOverrides({
